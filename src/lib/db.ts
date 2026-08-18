@@ -2,15 +2,19 @@ import { createClient, type Client, type InArgs } from "@libsql/client";
 import path from "node:path";
 import fs from "node:fs";
 
-const dataDir = path.join(process.cwd(), "data");
-if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
-
-const localDbPath = path.join(dataDir, "cms.sqlite").replace(/\\/g, "/");
-
 // En local (sin variables de entorno) usa un archivo SQLite normal.
 // En producción (Vercel), TURSO_DATABASE_URL/TURSO_AUTH_TOKEN apuntan a la
 // base de datos real en Turso — mismo motor SQLite, mismo código.
-const url = process.env.TURSO_DATABASE_URL || `file:${localDbPath}`;
+function resolveUrl(): string {
+  if (process.env.TURSO_DATABASE_URL) return process.env.TURSO_DATABASE_URL;
+
+  const dataDir = path.join(process.cwd(), "data");
+  if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+  const localDbPath = path.join(dataDir, "cms.sqlite").replace(/\\/g, "/");
+  return `file:${localDbPath}`;
+}
+
+const url = resolveUrl();
 const authToken = process.env.TURSO_AUTH_TOKEN;
 
 declare global {
