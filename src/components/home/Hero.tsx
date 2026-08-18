@@ -48,7 +48,8 @@ export function Hero({
             as="h1"
             multiline
             label="Título principal"
-            className="mt-6 block text-[34px] font-semibold leading-[1.08] text-white sm:text-5xl lg:text-[56px]"
+            className="mt-6 block text-[40px] leading-[1.05] tracking-wide text-white sm:text-6xl lg:text-[68px]"
+            style={{ fontFamily: "var(--font-bebas-neue)" }}
           />
 
           <EditableText
@@ -62,17 +63,26 @@ export function Hero({
             className="mt-5 block max-w-lg text-[16px] leading-relaxed text-white/70 sm:text-lg"
           />
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-wrap gap-3">
+            <ButtonLink href="/servicios#mantencion" variant="outlineLight" size="md">
+              Mantención de extintores
+            </ButtonLink>
+            <ButtonLink href="/servicios#recarga" variant="outlineLight" size="md">
+              Recarga de extintores
+            </ButtonLink>
+            <ButtonLink href="/servicios#venta" variant="outlineLight" size="md">
+              Venta de Extintores
+            </ButtonLink>
             <ButtonLink
               href={buildWhatsAppLink(whatsappNumber, "Hola, quiero cotizar extintores. ¿Me pueden ayudar?")}
               external
-              size="lg"
+              size="md"
               icon={<WhatsAppIcon className="h-5 w-5" />}
             >
-              {content.cta_primary_text}
+              Cotizar
             </ButtonLink>
-            <ButtonLink href="/productos" variant="outlineLight" size="lg">
-              {content.cta_secondary_text}
+            <ButtonLink href="/productos" variant="outlineLight" size="md">
+              Ver Catálogo
             </ButtonLink>
           </div>
 

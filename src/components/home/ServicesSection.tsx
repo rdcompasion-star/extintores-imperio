@@ -32,7 +32,11 @@ export async function ServicesSection({
           {services.map((service, i) => {
             const cta = resolveCta(service.ctaType, service.ctaValue, whatsappNumber);
             return (
-              <div key={service.slug} className="flex flex-col gap-3 rounded-xl border border-border bg-bg p-6">
+              <div
+                key={service.slug}
+                id={service.slug}
+                className="flex scroll-mt-24 flex-col gap-3 rounded-xl border border-border bg-bg p-6"
+              >
                 <span className="font-mono text-xs font-semibold text-red-700">0{i + 1}</span>
                 <h3 className="text-lg font-semibold text-ink-950">{service.title}</h3>
                 <p className="text-[14px] leading-relaxed text-ink-500">{service.description}</p>

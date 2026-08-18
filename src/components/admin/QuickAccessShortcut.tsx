@@ -18,8 +18,15 @@ export function QuickAccessShortcut() {
       }
       if (e.key === "Escape") setOpen(false);
     }
+    function onSecretTrigger() {
+      setOpen(true);
+    }
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    window.addEventListener("eimp:open-admin-access", onSecretTrigger);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("eimp:open-admin-access", onSecretTrigger);
+    };
   }, []);
 
   useEffect(() => {

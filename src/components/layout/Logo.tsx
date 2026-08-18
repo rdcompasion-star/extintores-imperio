@@ -5,10 +5,12 @@ export function Logo({
   dark = false,
   companyName = "Extintores Imperio",
   logoSrc,
+  onClick,
 }: {
   dark?: boolean;
   companyName?: string;
   logoSrc?: string;
+  onClick?: () => void;
 }) {
   const words = companyName.trim().split(/\s+/);
   const twoLine = words.length === 2;
@@ -16,12 +18,13 @@ export function Logo({
   return (
     <Link
       href="/"
+      onClick={onClick}
       className="flex items-center gap-2.5 shrink-0"
       aria-label={`${companyName}, ir al inicio`}
     >
       {logoSrc ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={logoSrc} alt={companyName} className="h-9 w-auto max-w-[140px] object-contain" />
+        <img src={logoSrc} alt={companyName} className="h-12 w-auto max-w-[210px] object-contain sm:h-14" />
       ) : (
         <>
           <span className="flex h-9 w-9 items-center justify-center rounded-md bg-red-700 text-white">

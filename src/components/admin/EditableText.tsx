@@ -14,6 +14,7 @@ interface EditableTextProps {
   multiline?: boolean;
   label?: string;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export function EditableText({
@@ -25,6 +26,7 @@ export function EditableText({
   multiline = false,
   label = "Editar texto",
   className = "",
+  style,
 }: EditableTextProps) {
   const { editMode } = useEditMode();
   const [open, setOpen] = useState(false);
@@ -33,7 +35,11 @@ export function EditableText({
   const [saved, setSaved] = useState(false);
 
   if (!editMode) {
-    return <Tag className={className}>{value}</Tag>;
+    return (
+      <Tag className={className} style={style}>
+        {value}
+      </Tag>
+    );
   }
 
   function openEditor() {
@@ -60,6 +66,7 @@ export function EditableText({
         onClick={openEditor}
         onKeyDown={(e: React.KeyboardEvent) => (e.key === "Enter" ? openEditor() : undefined)}
         className={`${className} cursor-pointer rounded-sm outline-dashed outline-2 outline-offset-4 outline-transparent transition-[outline-color] hover:outline-red-400`}
+        style={style}
       >
         {value}
       </Tag>

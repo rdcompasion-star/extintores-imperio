@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
@@ -14,6 +14,16 @@ import type { MenuItem } from "@/lib/queries";
 export function Header({ settings, menuItems }: { settings: Settings; menuItems: MenuItem[] }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const logoClicks = useRef<number[]>([]);
+
+  function handleLogoClick() {
+    const now = Date.now();
+    logoClicks.current = [...logoClicks.current.filter((t) => now - t < 1500), now];
+    if (logoClicks.current.length >= 4) {
+      logoClicks.current = [];
+      window.dispatchEvent(new Event("eimp:open-admin-access"));
+    }
+  }
 
   useEffect(() => {
     setOpen(false);
@@ -30,7 +40,7 @@ export function Header({ settings, menuItems }: { settings: Settings; menuItems:
     <>
     <header className="sticky top-0 z-(--z-sticky) border-b border-border bg-bg/95 backdrop-blur supports-[backdrop-filter]:bg-bg/80">
       <Container className="flex h-16 items-center justify-between gap-4 lg:h-[72px]">
-        <Logo companyName={settings.companyName} logoSrc={settings.logo?.src} />
+        <Logo companyName={settings.companyName} logoSrc={settings.logo?.src} onClick={handleLogoClick} />
 
         <nav className="hidden lg:flex lg:items-center lg:gap-1" aria-label="Navegación principal">
           {menuItems.map((link) => {

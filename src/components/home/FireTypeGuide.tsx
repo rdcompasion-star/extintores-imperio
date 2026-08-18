@@ -19,15 +19,28 @@ export function FireTypeGuide({
       <Container>
         <SectionHeading title={content.title} lead={content.lead} />
 
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {fireClasses.map((fc) => (
-            <div key={fc.id} className="flex flex-col gap-3 rounded-xl border border-border bg-surface p-5">
-              <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-red-50 font-display text-lg font-bold text-red-700">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4">
+          {fireClasses.slice(0, 2).map((fc) => (
+            <div key={fc.id} className="flex flex-col gap-2 rounded-xl border border-border bg-surface p-3 sm:gap-3 sm:p-5">
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-red-50 font-display text-base font-bold text-red-700 sm:h-11 sm:w-11 sm:text-lg">
                 {fc.id}
               </span>
               <div>
-                <h3 className="text-[15px] font-semibold text-ink-950">{fc.title}</h3>
-                <p className="mt-1 text-[13px] leading-relaxed text-ink-500">{fc.description}</p>
+                <h3 className="text-[13px] font-semibold text-ink-950 sm:text-[15px]">{fc.title}</h3>
+                <p className="mt-1 text-[11px] leading-snug text-ink-500 sm:text-[13px] sm:leading-relaxed">{fc.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-3 grid grid-cols-3 gap-3 sm:mt-4 sm:gap-4">
+          {fireClasses.slice(2).map((fc) => (
+            <div key={fc.id} className="flex flex-col gap-2 rounded-xl border border-border bg-surface p-3 sm:gap-3 sm:p-5">
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-red-50 font-display text-base font-bold text-red-700 sm:h-11 sm:w-11 sm:text-lg">
+                {fc.id}
+              </span>
+              <div>
+                <h3 className="text-[13px] font-semibold text-ink-950 sm:text-[15px]">{fc.title}</h3>
+                <p className="mt-1 text-[11px] leading-snug text-ink-500 sm:text-[13px] sm:leading-relaxed">{fc.description}</p>
               </div>
             </div>
           ))}
