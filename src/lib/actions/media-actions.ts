@@ -113,7 +113,9 @@ export async function uploadMediaAction(formData: FormData) {
     revalidatePath("/", "layout");
     revalidatePath("/admin/medios");
     return { ok: true as const, media };
-  } catch {
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error("uploadMediaAction failed:", err);
     return { ok: false as const, error: "No se pudo procesar la imagen. Intenta nuevamente." };
   }
 }
