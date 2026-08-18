@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, IBM_Plex_Mono, Bebas_Neue } from "next/font/google";
+import { Inter, Space_Grotesk, IBM_Plex_Mono, Bebas_Neue, Roboto_Slab } from "next/font/google";
 import "./globals.css";
 import "@/lib/bootstrap";
 import { SITE_URL } from "@/lib/site";
@@ -27,6 +27,15 @@ const bebasNeue = Bebas_Neue({
   variable: "--font-bebas-neue",
   subsets: ["latin"],
   weight: "400",
+  display: "swap",
+});
+
+// Rockwell no está disponible en Google Fonts (es de Monotype); Roboto Slab
+// es el sustituto slab-serif más cercano de uso libre.
+const rockwell = Roboto_Slab({
+  variable: "--font-rockwell",
+  subsets: ["latin"],
+  weight: ["600", "700"],
   display: "swap",
 });
 
@@ -71,7 +80,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es-CL"
-      className={`${inter.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable} ${bebasNeue.variable} h-full antialiased`}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable} ${bebasNeue.variable} ${rockwell.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

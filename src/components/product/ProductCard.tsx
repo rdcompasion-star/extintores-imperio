@@ -109,12 +109,12 @@ export function ProductCard({
 
         <p className="text-[13px] font-semibold text-ink-700 sm:text-sm">{product.price || "Consultar precio"}</p>
 
-        <div className="mt-auto flex flex-col gap-1.5 pt-1 sm:gap-2 sm:flex-row">
+        <div className="mt-auto flex flex-col gap-1.5 pt-1 sm:gap-2">
           <ButtonLink
             href={`/productos/${product.slug}`}
             variant="secondary"
             size="md"
-            className="flex-1 !h-9 !px-2 !text-[12px] sm:!h-11 sm:!px-5 sm:!text-[15px]"
+            className="w-full justify-center !h-9 !px-2 !text-[12px] sm:!h-11 sm:!px-5 sm:!text-[15px]"
           >
             Ver especificaciones
           </ButtonLink>
@@ -122,7 +122,7 @@ export function ProductCard({
             href={buildWhatsAppLink(whatsappNumber, buildProductWhatsAppMessage(product.name))}
             external
             size="md"
-            className="flex-1 !h-9 !px-2 !text-[12px] sm:!h-11 sm:!px-5 sm:!text-[15px]"
+            className="w-full justify-center !h-9 !px-2 !text-[12px] sm:!h-11 sm:!px-5 sm:!text-[15px]"
           >
             Cotizar
           </ButtonLink>
