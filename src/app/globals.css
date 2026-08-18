@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  /* Neutrals — cool graphite scale, zero warm tint (never cream/sand). */
+  --color-bg: oklch(98.5% 0 0);
+  --color-surface: oklch(97% 0.0015 285);
+  --color-surface-2: oklch(94.5% 0.003 285);
+  --color-border: oklch(88% 0.004 285);
+  --color-border-strong: oklch(78% 0.006 285);
+
+  --color-ink-950: oklch(15% 0.004 285);
+  --color-ink-900: oklch(20% 0.005 285);
+  --color-ink-700: oklch(33% 0.009 285);
+  --color-ink-500: oklch(50% 0.01 285);
+  --color-ink-400: oklch(60% 0.009 285);
+  --color-ink-300: oklch(74% 0.007 285);
+  --color-ink-100: oklch(95.5% 0.002 285);
+
+  /* Brand red — safety / action. Used strategically, not as a body fill. */
+  --color-red-50: oklch(96.5% 0.02 23);
+  --color-red-100: oklch(92% 0.045 22);
+  --color-red-500: oklch(58% 0.21 26);
+  --color-red-600: oklch(52% 0.2 26);
+  --color-red-700: oklch(45% 0.185 26);
+  --color-red-800: oklch(38% 0.155 25);
+
+  --color-safety-amber: oklch(75% 0.16 70);
+}
+
+@theme inline {
+  --font-display: var(--font-space-grotesk);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-ibm-plex-mono);
+}
+
+:root {
+  /* z-index scale — never arbitrary values like 999/9999. */
+  --z-dropdown: 20;
+  --z-sticky: 30;
+  --z-modal-backdrop: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+  --z-tooltip: 70;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink-900);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  text-wrap: balance;
+  letter-spacing: -0.02em;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--color-red-600);
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-red-600);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
