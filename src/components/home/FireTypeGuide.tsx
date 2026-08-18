@@ -17,7 +17,7 @@ export function FireTypeGuide({
   return (
     <section className={compact ? "py-14 sm:py-16 lg:py-20" : "py-10 sm:py-14"}>
       <Container>
-        <SectionHeading title={content.title} lead={content.lead} />
+        <SectionHeading title={content.title} lead={content.lead} bebas />
 
         <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4">
           {fireClasses.slice(0, 2).map((fc) => (

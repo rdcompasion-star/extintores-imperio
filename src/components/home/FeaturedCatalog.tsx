@@ -17,7 +17,7 @@ export async function FeaturedCatalog({
     <section className="border-y border-border bg-surface py-14 sm:py-16 lg:py-20">
       <Container>
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-          <SectionHeading title={content.title} lead={content.lead} />
+          <SectionHeading title={content.title} lead={content.lead} bebas />
           <ButtonLink href="/productos" variant="secondary" size="md" className="shrink-0">
             Ver catálogo completo
           </ButtonLink>

@@ -20,7 +20,7 @@ export async function ServicesSection({
     <section className={`border-t border-border bg-surface ${compact ? "py-14 sm:py-16 lg:py-20" : "py-10 sm:py-14"}`}>
       <Container>
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-          <SectionHeading title={content.title} lead={content.lead} />
+          <SectionHeading title={content.title} lead={content.lead} bebas />
           {compact && (
             <ButtonLink href="/servicios" variant="secondary" size="md" className="shrink-0">
               Ver todos los servicios

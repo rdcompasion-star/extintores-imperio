@@ -21,6 +21,7 @@ export default async function TiposDeFuegoPage() {
       <PageHeader
         eyebrow="Guía educativa"
         title="¿Qué tipo de fuego necesitas combatir?"
+        bebas
         lead="Conocer la clase de fuego de tu instalación es el primer paso para elegir el extintor correcto."
       />
       <FireTypeGuide compact content={content.fire_guide ?? {}} whatsappNumber={settings.whatsappNumber} />

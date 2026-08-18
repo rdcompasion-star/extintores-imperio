@@ -19,6 +19,7 @@ export default async function NormativaPage() {
       <PageHeader
         eyebrow="Normativa"
         title="Normativa y seguridad en extintores en Chile"
+        bebas
         lead="Una guía general para entender el marco regulatorio de los extintores portátiles en Chile."
       />
       <NormativaSection content={content.normativa ?? {}} />

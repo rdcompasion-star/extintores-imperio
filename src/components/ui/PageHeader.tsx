@@ -5,10 +5,12 @@ export function PageHeader({
   eyebrow,
   title,
   lead,
+  bebas = false,
 }: {
   eyebrow?: string;
   title: ReactNode;
   lead?: ReactNode;
+  bebas?: boolean;
 }) {
   return (
     <section className="border-b border-border bg-ink-950 py-14 sm:py-16">
@@ -17,7 +19,12 @@ export function PageHeader({
           {eyebrow && (
             <p className="text-xs font-semibold uppercase tracking-wide text-red-500">{eyebrow}</p>
           )}
-          <h1 className="mt-2 text-[30px] font-semibold leading-tight text-white sm:text-4xl">{title}</h1>
+          <h1
+            className="mt-2 text-[30px] font-semibold leading-tight text-white sm:text-4xl"
+            style={bebas ? { fontFamily: "var(--font-bebas-neue)" } : undefined}
+          >
+            {title}
+          </h1>
           {lead && <p className="mt-4 text-[15px] leading-relaxed text-white/65 sm:text-base">{lead}</p>}
         </div>
       </Container>
