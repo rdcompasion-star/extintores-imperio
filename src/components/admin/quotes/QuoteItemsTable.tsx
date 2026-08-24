@@ -18,6 +18,8 @@ export interface LocalQuoteItem {
   unitPrice: number;
   discountType: DiscountType;
   discountValue: number;
+  /** Cotizador en blanco: el precio se ingresa a mano en vez de venir del catálogo. */
+  manualPrice?: boolean;
 }
 
 export function QuoteItemsTable({
@@ -56,6 +58,7 @@ function ItemRow({
   onRemove: (localId: string) => void;
 }) {
   const [qtyText, setQtyText] = useState(String(item.quantity));
+  const [priceText, setPriceText] = useState(item.unitPrice > 0 ? String(item.unitPrice) : "");
   const lineTotal = calculateLineTotal({
     quantity: item.quantity,
     unitPrice: item.unitPrice,
@@ -70,6 +73,12 @@ function ItemRow({
     onChange(item.localId, { quantity: safe });
   }
 
+  function commitPrice(raw: string) {
+    const n = Math.max(0, Math.floor(Number(raw.replace(/[^0-9]/g, "")) || 0));
+    setPriceText(n > 0 ? String(n) : "");
+    onChange(item.localId, { unitPrice: n });
+  }
+
   return (
     <div className="rounded-xl border border-border bg-bg p-4">
       <div className="mb-3 flex items-start justify-between gap-3">
@@ -78,7 +87,7 @@ function ItemRow({
             {item.name} {item.sizeLabel ? <span className="font-normal text-ink-500">· {item.sizeLabel}</span> : null}
           </p>
           <p className="text-xs text-ink-500">
-            {item.code} · {formatCLP(item.unitPrice)} / {item.unit}
+            {item.code} · {item.manualPrice ? "precio manual" : `${formatCLP(item.unitPrice)} / ${item.unit}`}
           </p>
         </div>
         <ConfirmButton
@@ -89,6 +98,20 @@ function ItemRow({
           className="shrink-0 rounded-md px-2 py-1.5 text-xs font-medium text-ink-400 hover:bg-red-50 hover:text-red-700"
         />
       </div>
+
+      {item.manualPrice && (
+        <div className="mb-3">
+          <label className="mb-1 block text-xs font-medium text-ink-500">Precio unitario (manual)</label>
+          <input
+            inputMode="numeric"
+            placeholder="Ingresa el precio"
+            value={priceText}
+            onChange={(e) => setPriceText(e.target.value.replace(/[^0-9]/g, ""))}
+            onBlur={(e) => commitPrice(e.target.value)}
+            className="h-10 w-full rounded-md border border-red-300 bg-surface px-2 text-[15px] text-ink-900"
+          />
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <div>

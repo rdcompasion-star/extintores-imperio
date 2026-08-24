@@ -205,6 +205,7 @@ const schemaStatements = [
     net_price INTEGER NOT NULL,
     active INTEGER NOT NULL DEFAULT 1,
     notes TEXT NOT NULL DEFAULT '',
+    catalog_group TEXT NOT NULL DEFAULT 'general',
     order_index INTEGER NOT NULL DEFAULT 0,
     created_at TEXT NOT NULL DEFAULT (datetime('now','localtime')),
     updated_at TEXT NOT NULL DEFAULT (datetime('now','localtime'))
@@ -290,6 +291,15 @@ let readyPromise: Promise<void> | null = null;
 export function ensureSchema(): Promise<void> {
   if (!readyPromise) {
     readyPromise = (async () => {
+      // El build de Next corre varios workers en paralelo contra el mismo
+      // archivo SQLite local; sin esto, escrituras concurrentes fallan de
+      // inmediato con SQLITE_BUSY en vez de esperar su turno.
+      try {
+        await db.execute(`PRAGMA busy_timeout = 5000`);
+      } catch {
+        // Turso remoto no soporta este pragma; no es necesario ahí.
+      }
+
       for (const stmt of schemaStatements) {
         await db.execute(stmt);
       }
@@ -298,6 +308,12 @@ export function ensureSchema(): Promise<void> {
       const settingsColumns = new Set(existingRes.rows.map((c) => c.name as string));
       for (const [column, sql] of Object.entries(settingsMigrations)) {
         if (!settingsColumns.has(column)) await db.execute(sql);
+      }
+
+      const catalogRes = await db.execute(`PRAGMA table_info(quote_catalog_items)`);
+      const catalogColumns = new Set(catalogRes.rows.map((c) => c.name as string));
+      if (!catalogColumns.has("catalog_group")) {
+        await db.execute(`ALTER TABLE quote_catalog_items ADD COLUMN catalog_group TEXT NOT NULL DEFAULT 'general'`);
       }
 
       const backfillRes = await db.execute(`SELECT id, rut FROM settings WHERE id = 1`);

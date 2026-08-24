@@ -579,26 +579,50 @@ export async function ensureSeeded() {
     await logHistory("sections", null, "Secciones del Home inicializadas.");
   }
 
-  const quoteCatalogCount = await dbGet<{ c: number }>(`SELECT COUNT(*) as c FROM quote_catalog_items`);
-  if (!quoteCatalogCount || quoteCatalogCount.c === 0) {
+  // Upsert por código en cada arranque: el archivo quote-catalog-seed.ts es la
+  // fuente de verdad. Un ítem nuevo se inserta, uno existente actualiza sus
+  // datos (precio, nombre, etc.) pero conserva el "active" que haya fijado el
+  // admin desde el panel.
+  const quoteCatalogCountBefore = await dbGet<{ c: number }>(`SELECT COUNT(*) as c FROM quote_catalog_items`);
+  try {
     await db.batch(
-      quoteCatalogSeed.map((item, i) => ({
-        sql: `INSERT INTO quote_catalog_items (code, kind, category, name, unit, size_label, net_price, notes, order_index)
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        args: [
-          item.code,
-          item.kind,
-          item.category,
-          item.name,
-          item.unit,
-          item.sizeLabel,
-          item.netPrice,
-          item.notes ?? "",
-          i,
-        ],
-      })),
+    quoteCatalogSeed.map((item, i) => ({
+      sql: `INSERT INTO quote_catalog_items (code, kind, category, name, unit, size_label, net_price, notes, catalog_group, order_index)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(code) DO UPDATE SET
+              kind = excluded.kind,
+              category = excluded.category,
+              name = excluded.name,
+              unit = excluded.unit,
+              size_label = excluded.size_label,
+              net_price = excluded.net_price,
+              notes = excluded.notes,
+              catalog_group = excluded.catalog_group,
+              order_index = excluded.order_index,
+              updated_at = datetime('now','localtime')`,
+      args: [
+        item.code,
+        item.kind,
+        item.category,
+        item.name,
+        item.unit,
+        item.sizeLabel,
+        item.netPrice,
+        item.notes ?? "",
+        item.catalogGroup ?? "general",
+        i,
+      ],
+    })),
       "write"
     );
-    await logHistory("quote_catalog", null, `Catálogo del cotizador cargado: ${quoteCatalogSeed.length} ítems.`);
+    if (!quoteCatalogCountBefore || quoteCatalogCountBefore.c === 0) {
+      await logHistory("quote_catalog", null, `Catálogo del cotizador cargado: ${quoteCatalogSeed.length} ítems.`);
+    }
+  } catch (err) {
+    // Puede chocar con otro proceso escribiendo la misma tabla al mismo tiempo
+    // (varios workers de build, cold starts concurrentes). No es fatal: el
+    // catálogo ya sembrado sigue sirviendo; se reintenta en el próximo arranque.
+    // eslint-disable-next-line no-console
+    console.error("No se pudo sincronizar el catálogo del cotizador:", err);
   }
 }

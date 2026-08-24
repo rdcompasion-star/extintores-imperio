@@ -17,7 +17,16 @@ export const catalogCategoryLabels: Record<string, string> = {
   co2: "CO₂",
   "clase-k": "Clase K",
   "red-humeda": "Red Húmeda",
+  "agua-a": "Agua Presurizada (Clase A)",
   general: "General",
+};
+
+export type CatalogGroup = "general" | "caf" | "blank";
+
+export const catalogGroupLabels: Record<CatalogGroup, string> = {
+  general: "Estándar",
+  caf: "CAF",
+  blank: "En blanco",
 };
 
 export const catalogKindLabels: Record<QuoteItemKind, string> = {

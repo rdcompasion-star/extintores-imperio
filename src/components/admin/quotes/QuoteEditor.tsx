@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Quote, QuoteCatalogItem } from "@/lib/quote-queries";
-import type { DiscountType } from "@/lib/quote-constants";
+import type { DiscountType, CatalogGroup } from "@/lib/quote-constants";
+import { catalogGroupLabels } from "@/lib/quote-constants";
 import { saveQuoteAction } from "@/lib/actions/quote-actions";
 import { calculateQuote } from "@/lib/quote-calculations";
 import { formatCLP } from "@/lib/format";
@@ -141,6 +142,12 @@ export function QuoteEditor({
     })) ?? []
   );
 
+  const [catalogMode, setCatalogMode] = useState<CatalogGroup>("general");
+  const pickerItems = useMemo(
+    () => catalogItems.filter((i) => i.catalogGroup === (catalogMode === "caf" ? "caf" : "general")),
+    [catalogItems, catalogMode]
+  );
+
   const [discountType, setDiscountType] = useState<DiscountType>(quote?.discountType ?? "none");
   const [discountValue, setDiscountValue] = useState(quote?.discountValue ?? 0);
 
@@ -199,7 +206,8 @@ export function QuoteEditor({
           unit: catalogItem.unit,
           sizeLabel: catalogItem.sizeLabel,
           quantity: 1,
-          unitPrice: catalogItem.netPrice,
+          unitPrice: catalogMode === "blank" ? 0 : catalogItem.netPrice,
+          manualPrice: catalogMode === "blank",
           discountType: "none",
           discountValue: 0,
         },
@@ -373,7 +381,27 @@ export function QuoteEditor({
           {step === 2 && (
             <div className="flex flex-col gap-4">
               <div className="rounded-xl border border-border bg-bg p-5">
-                <CatalogPicker items={catalogItems} onSelect={addCatalogItem} />
+                <label className={labelClasses}>Catálogo</label>
+                <div className="mb-4 flex gap-2">
+                  {(Object.keys(catalogGroupLabels) as CatalogGroup[]).map((mode) => (
+                    <button
+                      key={mode}
+                      type="button"
+                      onClick={() => setCatalogMode(mode)}
+                      className={`rounded-md px-3.5 py-2 text-sm font-medium ${
+                        catalogMode === mode ? "bg-red-700 text-white" : "border border-border-strong bg-surface text-ink-700"
+                      }`}
+                    >
+                      {catalogGroupLabels[mode]}
+                    </button>
+                  ))}
+                </div>
+                {catalogMode === "blank" && (
+                  <p className="mb-3 text-xs text-ink-500">
+                    Elige el producto para su nombre y código; el precio queda en blanco para completarlo a mano.
+                  </p>
+                )}
+                <CatalogPicker items={pickerItems} onSelect={addCatalogItem} />
               </div>
               <QuoteItemsTable items={items} onChange={updateItem} onRemove={removeItem} />
             </div>

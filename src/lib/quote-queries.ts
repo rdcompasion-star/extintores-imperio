@@ -16,6 +16,7 @@ export interface QuoteCatalogItem {
   netPrice: number;
   active: boolean;
   notes: string;
+  catalogGroup: string;
 }
 
 interface QuoteCatalogRow {
@@ -29,6 +30,7 @@ interface QuoteCatalogRow {
   net_price: number;
   active: number;
   notes: string;
+  catalog_group: string;
 }
 
 function mapCatalogItem(row: QuoteCatalogRow): QuoteCatalogItem {
@@ -43,6 +45,7 @@ function mapCatalogItem(row: QuoteCatalogRow): QuoteCatalogItem {
     netPrice: row.net_price,
     active: !!row.active,
     notes: row.notes,
+    catalogGroup: row.catalog_group,
   };
 }
 
