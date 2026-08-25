@@ -100,7 +100,7 @@ export default async function ProductDetailPage({
               <img
                 src={product.image.src}
                 alt={product.image.alt || product.name}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain p-6"
               />
             ) : (
               <ProductGlyph
