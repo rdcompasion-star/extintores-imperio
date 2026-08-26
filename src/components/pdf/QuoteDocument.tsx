@@ -12,7 +12,7 @@ const BORDER = "#d8d8d8";
 const styles = StyleSheet.create({
   page: { paddingTop: 36, paddingBottom: 52, paddingHorizontal: 40, fontSize: 9.5, color: INK, fontFamily: "Helvetica" },
   headerRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 },
-  logo: { width: 150, height: 56, objectFit: "contain", objectPosition: "left", opacity: 0.5, marginBottom: 6 },
+  logo: { width: 150, height: 56, objectFit: "contain", objectPosition: "left", marginBottom: 6 },
   companyName: { fontSize: 13, fontFamily: "Helvetica-Bold", color: INK },
   companyLine: { fontSize: 8.5, color: GRAY, marginTop: 1 },
   quoteBox: { alignItems: "flex-end" },

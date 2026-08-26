@@ -78,6 +78,7 @@ function TextArea({
 }
 
 const steps = ["Cotización", "Cliente", "Ítems", "Descuento", "Condiciones", "Vista previa"];
+const sellerOptions = ["Pamela Díaz", "Luis Medina Rojas"];
 
 let localIdSeq = 0;
 function nextLocalId() {
@@ -318,7 +319,17 @@ export function QuoteEditor({
                 <Field label="Fecha de la cotización" type="date" value={issueDate} onChange={setIssueDate} />
                 <Field label="Fecha de vencimiento" type="date" value={validUntil} onChange={setValidUntil} />
               </div>
-              <Field label="Vendedor / responsable" value={seller} onChange={setSeller} placeholder="Nombre del vendedor" />
+              <div>
+                <label className={labelClasses}>Vendedor / responsable</label>
+                <select value={seller} onChange={(e) => setSeller(e.target.value)} className={inputClasses}>
+                  <option value="">Selecciona un vendedor</option>
+                  {sellerOptions.map((name) => (
+                    <option key={name} value={name}>
+                      {name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           )}
 

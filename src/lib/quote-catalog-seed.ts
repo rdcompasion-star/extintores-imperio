@@ -17,6 +17,12 @@
 // los precios específicos del cliente CAF, tomados de "Valores Caf Chile
 // 26.xls" — incluye 2 productos que no existen en el catálogo general
 // (Extintor y Carga de Agua Presurizada Clase A).
+//
+// 2026-08-24 (corrección): Mantención Económica (MTE-*) vuelve a sus precios
+// originales según "Cotizacion Mantencion Economica.xls" — NO sigue la subida
+// de Carga; tiene su propia lista de precios, independiente. Se le quitó
+// "Económica" al nombre visible. Los ítems de Acetato de Potasio (Clase K)
+// pasan su unidad de tamaño de KG a LTS (es un agente líquido).
 
 import type { QuoteItemKind } from "@/lib/quote-constants";
 
@@ -45,9 +51,9 @@ export const quoteCatalogSeed: QuoteCatalogSeedItem[] = [
   { code: "NEW-CO2-02KG", kind: "producto", category: "co2", name: "Extintor Nuevo Gas CO₂ Dióxido de Carbono", unit: "unidad", sizeLabel: "2 KG", netPrice: 34900 },
   { code: "NEW-CO2-05KG", kind: "producto", category: "co2", name: "Extintor Nuevo Gas CO₂ Dióxido de Carbono", unit: "unidad", sizeLabel: "5 KG", netPrice: 44900 },
   { code: "NEW-CO2-10KG-CARRO", kind: "producto", category: "co2", name: "Carro Extintor Nuevo Gas CO₂ Dióxido de Carbono", unit: "unidad", sizeLabel: "10 KG", netPrice: 129900 },
-  { code: "NEW-K-02KG", kind: "producto", category: "clase-k", name: "Extintor Nuevo Acetato de Potasio Clase K", unit: "unidad", sizeLabel: "2 KG", netPrice: 80900 },
-  { code: "NEW-K-04KG", kind: "producto", category: "clase-k", name: "Extintor Nuevo Acetato de Potasio Clase K", unit: "unidad", sizeLabel: "4 KG", netPrice: 90900 },
-  { code: "NEW-K-06KG", kind: "producto", category: "clase-k", name: "Extintor Nuevo Acetato de Potasio Clase K", unit: "unidad", sizeLabel: "6 KG", netPrice: 119900 },
+  { code: "NEW-K-02KG", kind: "producto", category: "clase-k", name: "Extintor Nuevo Acetato de Potasio Clase K", unit: "unidad", sizeLabel: "2 LTS", netPrice: 80900 },
+  { code: "NEW-K-04KG", kind: "producto", category: "clase-k", name: "Extintor Nuevo Acetato de Potasio Clase K", unit: "unidad", sizeLabel: "4 LTS", netPrice: 90900 },
+  { code: "NEW-K-06KG", kind: "producto", category: "clase-k", name: "Extintor Nuevo Acetato de Potasio Clase K", unit: "unidad", sizeLabel: "6 LTS", netPrice: 119900 },
 
   // ---------- CARGAS / RECARGAS ----------
   { code: "CAR-PQS-01KG", kind: "servicio", category: "pqs-abc", name: "Carga Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "1 KG", netPrice: 4900 },
@@ -60,24 +66,24 @@ export const quoteCatalogSeed: QuoteCatalogSeedItem[] = [
   { code: "CAR-CO2-02KG", kind: "servicio", category: "co2", name: "Carga Extintor Gas CO₂ Dióxido de Carbono", unit: "servicio", sizeLabel: "2 KG", netPrice: 19900 },
   { code: "CAR-CO2-05KG", kind: "servicio", category: "co2", name: "Carga Extintor Gas CO₂ Dióxido de Carbono", unit: "servicio", sizeLabel: "5 KG", netPrice: 44900 },
   { code: "CAR-CO2-10KG-CARRO", kind: "servicio", category: "co2", name: "Carga Carro Extintor Gas CO₂ Dióxido de Carbono", unit: "servicio", sizeLabel: "10 KG", netPrice: 73900 },
-  { code: "CAR-K-02KG", kind: "servicio", category: "clase-k", name: "Carga Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "2 KG", netPrice: 29900 },
-  { code: "CAR-K-04KG", kind: "servicio", category: "clase-k", name: "Carga Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "4 KG", netPrice: 49900 },
-  { code: "CAR-K-06KG", kind: "servicio", category: "clase-k", name: "Carga Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "6 KG", netPrice: 54900 },
-  { code: "CAR-K-10KG", kind: "servicio", category: "clase-k", name: "Carga Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "10 KG", netPrice: 69900 },
+  { code: "CAR-K-02KG", kind: "servicio", category: "clase-k", name: "Carga Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "2 LTS", netPrice: 29900 },
+  { code: "CAR-K-04KG", kind: "servicio", category: "clase-k", name: "Carga Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "4 LTS", netPrice: 49900 },
+  { code: "CAR-K-06KG", kind: "servicio", category: "clase-k", name: "Carga Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "6 LTS", netPrice: 54900 },
+  { code: "CAR-K-10KG", kind: "servicio", category: "clase-k", name: "Carga Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "10 LTS", netPrice: 69900 },
 
   // ---------- MANTENCIÓN ECONÓMICA ----------
-  { code: "MTE-PQS-01KG", kind: "servicio", category: "pqs-abc", name: "Mantención Económica Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "1 KG", netPrice: 4900 },
-  { code: "MTE-PQS-02KG", kind: "servicio", category: "pqs-abc", name: "Mantención Económica Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "2 KG", netPrice: 6900 },
-  { code: "MTE-PQS-04KG", kind: "servicio", category: "pqs-abc", name: "Mantención Económica Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "4 KG", netPrice: 10900 },
-  { code: "MTE-PQS-06KG", kind: "servicio", category: "pqs-abc", name: "Mantención Económica Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "6 KG", netPrice: 15900 },
-  { code: "MTE-PQS-10KG", kind: "servicio", category: "pqs-abc", name: "Mantención Económica Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "10 KG", netPrice: 20900 },
-  { code: "MTE-PQS-25KG-CARRO", kind: "servicio", category: "pqs-abc", name: "Mantención Económica Carro Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "25 KG", netPrice: 42900 },
-  { code: "MTE-PQS-50KG-CARRO", kind: "servicio", category: "pqs-abc", name: "Mantención Económica Carro Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "50 KG", netPrice: 78900 },
-  { code: "MTE-CO2-02KG", kind: "servicio", category: "co2", name: "Mantención Económica Extintor Gas CO₂ Dióxido de Carbono", unit: "servicio", sizeLabel: "2 KG", netPrice: 19900 },
-  { code: "MTE-CO2-05KG", kind: "servicio", category: "co2", name: "Mantención Económica Extintor Gas CO₂ Dióxido de Carbono", unit: "servicio", sizeLabel: "5 KG", netPrice: 44900 },
-  { code: "MTE-CO2-10KG-CARRO", kind: "servicio", category: "co2", name: "Mantención Económica Carro Extintor Gas CO₂ Dióxido de Carbono", unit: "servicio", sizeLabel: "10 KG", netPrice: 73900 },
-  { code: "MTE-K-06KG", kind: "servicio", category: "clase-k", name: "Mantención Económica Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "6 KG", netPrice: 54900 },
-  { code: "MTE-K-10KG", kind: "servicio", category: "clase-k", name: "Mantención Económica Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "10 KG", netPrice: 69900 },
+  { code: "MTE-PQS-01KG", kind: "servicio", category: "pqs-abc", name: "Mantención Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "1 KG", netPrice: 4202 },
+  { code: "MTE-PQS-02KG", kind: "servicio", category: "pqs-abc", name: "Mantención Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "2 KG", netPrice: 5042 },
+  { code: "MTE-PQS-04KG", kind: "servicio", category: "pqs-abc", name: "Mantención Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "4 KG", netPrice: 7200 },
+  { code: "MTE-PQS-06KG", kind: "servicio", category: "pqs-abc", name: "Mantención Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "6 KG", netPrice: 8200 },
+  { code: "MTE-PQS-10KG", kind: "servicio", category: "pqs-abc", name: "Mantención Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "10 KG", netPrice: 9800 },
+  { code: "MTE-PQS-25KG-CARRO", kind: "servicio", category: "pqs-abc", name: "Mantención Carro Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "25 KG", netPrice: 17900 },
+  { code: "MTE-PQS-50KG-CARRO", kind: "servicio", category: "pqs-abc", name: "Mantención Carro Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "50 KG", netPrice: 29900 },
+  { code: "MTE-CO2-02KG", kind: "servicio", category: "co2", name: "Mantención Extintor Gas CO₂ Dióxido de Carbono", unit: "servicio", sizeLabel: "2 KG", netPrice: 7200 },
+  { code: "MTE-CO2-05KG", kind: "servicio", category: "co2", name: "Mantención Extintor Gas CO₂ Dióxido de Carbono", unit: "servicio", sizeLabel: "5 KG", netPrice: 9800 },
+  { code: "MTE-CO2-10KG-CARRO", kind: "servicio", category: "co2", name: "Mantención Carro Extintor Gas CO₂ Dióxido de Carbono", unit: "servicio", sizeLabel: "10 KG", netPrice: 17900 },
+  { code: "MTE-K-06KG", kind: "servicio", category: "clase-k", name: "Mantención Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "6 LTS", netPrice: 29900 },
+  { code: "MTE-K-10KG", kind: "servicio", category: "clase-k", name: "Mantención Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "10 LTS", netPrice: 32900 },
 
   // ---------- MANTENCIÓN ESTÁNDAR ----------
   { code: "MTS-PQS-01KG", kind: "servicio", category: "pqs-abc", name: "Mantención Estándar Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "1 KG", netPrice: 5000 },
@@ -90,8 +96,8 @@ export const quoteCatalogSeed: QuoteCatalogSeedItem[] = [
   { code: "MTS-CO2-02KG", kind: "servicio", category: "co2", name: "Mantención Estándar Extintor Gas CO₂ Dióxido de Carbono", unit: "servicio", sizeLabel: "2 KG", netPrice: 14900, notes: "Planilla original decía $14.980; corregido a $14.900 por el cliente el 2026-08-18." },
   { code: "MTS-CO2-05KG", kind: "servicio", category: "co2", name: "Mantención Estándar Extintor Gas CO₂ Dióxido de Carbono", unit: "servicio", sizeLabel: "5 KG", netPrice: 24900 },
   { code: "MTS-CO2-10KG-CARRO", kind: "servicio", category: "co2", name: "Mantención Estándar Carro Extintor Gas CO₂ Dióxido de Carbono", unit: "servicio", sizeLabel: "10 KG", netPrice: 30900 },
-  { code: "MTS-K-06KG", kind: "servicio", category: "clase-k", name: "Mantención Estándar Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "6 KG", netPrice: 29900 },
-  { code: "MTS-K-10KG", kind: "servicio", category: "clase-k", name: "Mantención Estándar Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "10 KG", netPrice: 32900 },
+  { code: "MTS-K-06KG", kind: "servicio", category: "clase-k", name: "Mantención Estándar Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "6 LTS", netPrice: 29900 },
+  { code: "MTS-K-10KG", kind: "servicio", category: "clase-k", name: "Mantención Estándar Extintor Acetato de Potasio Clase K", unit: "servicio", sizeLabel: "10 LTS", netPrice: 32900 },
 
   // ---------- REPUESTOS Y ACCESORIOS ----------
   { code: "ACC-DIF-PQS-01", kind: "producto", category: "pqs-abc", name: "Difusor Extintor Polvo ABC Multipropósito", unit: "unidad", sizeLabel: "aplica a 1 KG", netPrice: 480 },
@@ -107,9 +113,9 @@ export const quoteCatalogSeed: QuoteCatalogSeedItem[] = [
   { code: "ACC-DIF-CO2-02", kind: "producto", category: "co2", name: "Difusor Extintor Gas CO₂ Dióxido de Carbono", unit: "unidad", sizeLabel: "aplica a 2 KG", netPrice: 5900 },
   { code: "ACC-MNG-CO2-05", kind: "producto", category: "co2", name: "Manguera Extintor Gas CO₂ Dióxido de Carbono", unit: "unidad", sizeLabel: "aplica a 5 KG", netPrice: 14900 },
   { code: "ACC-MNG-CO2-10-CARRO", kind: "producto", category: "co2", name: "Manguera Carro Extintor Gas CO₂ Dióxido de Carbono", unit: "unidad", sizeLabel: "aplica a 10 KG", netPrice: 16900 },
-  { code: "ACC-MNG-K-02", kind: "producto", category: "clase-k", name: "Manguera Extintor Acetato de Potasio Clase K", unit: "unidad", sizeLabel: "aplica a 2 KG", netPrice: 14900 },
-  { code: "ACC-MNG-K-04", kind: "producto", category: "clase-k", name: "Manguera Extintor Acetato de Potasio Clase K", unit: "unidad", sizeLabel: "aplica a 4 KG", netPrice: 15900 },
-  { code: "ACC-MNG-K-06", kind: "producto", category: "clase-k", name: "Manguera Extintor Acetato de Potasio Clase K", unit: "unidad", sizeLabel: "aplica a 6 KG", netPrice: 16900 },
+  { code: "ACC-MNG-K-02", kind: "producto", category: "clase-k", name: "Manguera Extintor Acetato de Potasio Clase K", unit: "unidad", sizeLabel: "aplica a 2 Lts", netPrice: 14900 },
+  { code: "ACC-MNG-K-04", kind: "producto", category: "clase-k", name: "Manguera Extintor Acetato de Potasio Clase K", unit: "unidad", sizeLabel: "aplica a 4 Lts", netPrice: 15900 },
+  { code: "ACC-MNG-K-06", kind: "producto", category: "clase-k", name: "Manguera Extintor Acetato de Potasio Clase K", unit: "unidad", sizeLabel: "aplica a 6 Lts", netPrice: 16900 },
   { code: "ACC-SOP-TRIPODE", kind: "producto", category: "general", name: "Soporte Trípode Extintor PQS o CO₂", unit: "unidad", sizeLabel: "aplica a 2 a 10 KG", netPrice: 22900 },
   { code: "ACC-SOP-CAMION", kind: "producto", category: "general", name: "Soporte Camión Reforzado", unit: "unidad", sizeLabel: "aplica a 4 a 10 KG", netPrice: 34900 },
   { code: "ACC-GAB-PVC-04-06", kind: "producto", category: "general", name: "Gabinete PVC", unit: "unidad", sizeLabel: "aplica a 4 a 6 KG", netPrice: 35900 },
