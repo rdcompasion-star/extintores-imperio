@@ -132,6 +132,11 @@ export const quoteCatalogSeed: QuoteCatalogSeedItem[] = [
   { code: "ACC-SOP-L-PQS", kind: "producto", category: "pqs-abc", name: "Soporte Metálico Tipo L Extintor Polvo", unit: "unidad", sizeLabel: "aplica a 4 a 10 KG", netPrice: 1300 },
   { code: "ACC-SOP-L-CO2", kind: "producto", category: "co2", name: "Soporte Metálico Tipo L Extintor CO₂", unit: "unidad", sizeLabel: "aplica a 2 a 5 KG", netPrice: 1800 },
 
+  // ---------- SERVICIOS SIN PRECIO FIJO (usar Cotizador en blanco) ----------
+  // Sin precio de lista confirmado por la empresa: netPrice queda en 0 a
+  // propósito (no se inventa un valor) y se cotiza cada vez con "En blanco".
+  { code: "INST-CARRETE-RH", kind: "servicio", category: "red-humeda", name: "Instalación Carrete Red Húmeda", unit: "servicio", sizeLabel: "30 y 25 mts", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco." },
+
   // ---------- CATÁLOGO CAF (precios específicos cliente CAF) ----------
   { code: "CAF-NEW-PQS75-01KG", kind: "producto", category: "pqs-abc", name: "Extintor Nuevo Certificado PQS 75% ABC Multipropósito", unit: "unidad", sizeLabel: "1 Kilo", netPrice: 10924, catalogGroup: "caf" },
   { code: "CAF-NEW-PQS75-02KG", kind: "producto", category: "pqs-abc", name: "Extintor Nuevo Certificado PQS 75% ABC Multipropósito", unit: "unidad", sizeLabel: "2 Kilos", netPrice: 19980, catalogGroup: "caf" },
