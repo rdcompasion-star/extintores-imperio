@@ -25,6 +25,7 @@ export default async function Home() {
     <>
       <Hero content={content.hero ?? {}} whatsappNumber={settings.whatsappNumber} />
       {isVisible("trust") && <TrustStats content={content.trust ?? {}} />}
+      {isVisible("clients") && <ClientsSection content={content.clients ?? {}} logos={clientLogos} />}
       {isVisible("categories") && <CategoryNav title={content.categories?.title ?? "Explora por tipo de agente"} />}
       {isVisible("featured_catalog") && (
         <FeaturedCatalog content={content.featured_catalog ?? {}} whatsappNumber={settings.whatsappNumber} />
@@ -37,7 +38,6 @@ export default async function Home() {
       )}
       {isVisible("normativa") && <NormativaSection compact content={content.normativa ?? {}} />}
       {isVisible("about") && <AboutSection compact content={content.about ?? {}} />}
-      {isVisible("clients") && <ClientsSection content={content.clients ?? {}} logos={clientLogos} />}
       {isVisible("faq_teaser") && <FAQSection compact content={content.faq_teaser ?? {}} />}
       {isVisible("contact_cta") && <ContactCTA />}
     </>

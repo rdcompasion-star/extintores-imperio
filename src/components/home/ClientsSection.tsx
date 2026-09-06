@@ -35,7 +35,7 @@ export function ClientsSection({ content, logos }: { content: Record<string, str
       ) : (
         <div className="relative mt-8 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
           <div
-            className="grid h-16 w-max grid-flow-col grid-rows-3 gap-3 sm:h-20 sm:gap-4 lg:h-24 lg:gap-6"
+            className="grid w-max grid-flow-col grid-rows-3 gap-3 sm:gap-4 lg:gap-6"
             style={{ animation: `clients-marquee ${durationSeconds}s linear infinite` }}
           >
             {[...logos, ...logos].map((logo, i) => (
