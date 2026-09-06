@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { AboutSection } from "@/components/home/AboutSection";
 import { ClientsSection } from "@/components/home/ClientsSection";
 import { ContactCTA } from "@/components/home/ContactCTA";
-import { getContentMap } from "@/lib/queries";
+import { getContentMap, listClientLogos } from "@/lib/queries";
 
 export const metadata: Metadata = {
   title: "Nosotros",
@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 
 export default async function NosotrosPage() {
   const content = await getContentMap("home");
+  const clientLogos = await listClientLogos();
 
   return (
     <>
@@ -23,7 +24,7 @@ export default async function NosotrosPage() {
         lead="Extintores Imperio es una empresa chilena dedicada a la comercialización, recarga y mantención de equipos contra incendios, con un equipo joven, profesional y capacitado."
       />
       <AboutSection content={content.about ?? {}} />
-      <ClientsSection content={content.clients ?? {}} />
+      <ClientsSection content={content.clients ?? {}} logos={clientLogos} />
       <ContactCTA />
     </>
   );

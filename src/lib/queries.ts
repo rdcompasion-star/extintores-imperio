@@ -588,6 +588,69 @@ export async function reorderMenuItems(orderedIds: number[]) {
   await logHistory("menu", null, `Se reordenó el menú.`);
 }
 
+// ---------- Logos de clientes ----------
+
+export interface ClientLogo {
+  id: number;
+  name: string;
+  order: number;
+  media: Media;
+}
+
+interface ClientLogoRow extends MediaRow {
+  logo_id: number;
+  logo_name: string;
+  logo_order: number;
+}
+
+function mapClientLogo(row: ClientLogoRow): ClientLogo {
+  return { id: row.logo_id, name: row.logo_name, order: row.logo_order, media: mapMedia(row) };
+}
+
+const clientLogoSelect = `
+  SELECT cl.id as logo_id, cl.name as logo_name, cl.order_index as logo_order,
+         m.id, m.filename, m.original_name, m.folder, m.alt_text, m.mime, m.width, m.height, m.variants, m.created_at
+  FROM client_logos cl
+  JOIN media m ON m.id = cl.media_id
+`;
+
+export async function listClientLogos(): Promise<ClientLogo[]> {
+  const rows = await dbAll<ClientLogoRow>(`${clientLogoSelect} ORDER BY cl.order_index ASC`);
+  return rows.map(mapClientLogo);
+}
+
+export async function createClientLogo(mediaId: number, name: string): Promise<number> {
+  const { lastInsertRowid } = await dbRun(
+    `INSERT INTO client_logos (media_id, name, order_index) VALUES (?, ?, (SELECT COALESCE(MAX(order_index), -1) + 1 FROM client_logos))`,
+    [mediaId, name]
+  );
+  await logHistory("client_logos", lastInsertRowid, `Se agregó el logo "${name || "sin nombre"}".`);
+  return lastInsertRowid;
+}
+
+export async function updateClientLogo(id: number, name: string) {
+  await dbRun(`UPDATE client_logos SET name = ? WHERE id = ?`, [name, id]);
+  await logHistory("client_logos", id, `Se editó el logo "${name || "sin nombre"}".`);
+}
+
+export async function replaceClientLogoMedia(id: number, mediaId: number) {
+  await dbRun(`UPDATE client_logos SET media_id = ? WHERE id = ?`, [mediaId, id]);
+  await logHistory("client_logos", id, `Se reemplazó la imagen del logo.`);
+}
+
+export async function deleteClientLogo(id: number) {
+  await dbRun(`DELETE FROM client_logos WHERE id = ?`, [id]);
+  await logHistory("client_logos", id, `Se eliminó un logo de cliente.`);
+}
+
+export async function reorderClientLogos(orderedIds: number[]) {
+  await db.batch(
+    orderedIds.map((id, i) => ({ sql: `UPDATE client_logos SET order_index = ? WHERE id = ?`, args: [i, id] })),
+    "write"
+  );
+  await logHistory("client_logos", null, `Se reordenaron los logos de clientes.`);
+}
+
 // ---------- Secciones (visible on/off) ----------
 
 export interface SectionRow {
@@ -730,7 +793,8 @@ export async function isMediaInUse(id: number): Promise<boolean> {
   const inProduct = await dbGet(`SELECT 1 as one FROM products WHERE image_media_id = ? OR gallery LIKE '%' || ? || '%'`, [id, id]);
   const inService = await dbGet(`SELECT 1 as one FROM services WHERE image_media_id = ?`, [id]);
   const inSettings = await dbGet(`SELECT 1 as one FROM settings WHERE logo_media_id = ? OR favicon_media_id = ?`, [id, id]);
-  return !!(inProduct || inService || inSettings);
+  const inClientLogo = await dbGet(`SELECT 1 as one FROM client_logos WHERE media_id = ?`, [id]);
+  return !!(inProduct || inService || inSettings || inClientLogo);
 }
 
 // ---------- Historial ----------

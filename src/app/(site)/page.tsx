@@ -10,13 +10,14 @@ import { AboutSection } from "@/components/home/AboutSection";
 import { ClientsSection } from "@/components/home/ClientsSection";
 import { FAQSection } from "@/components/home/FAQSection";
 import { ContactCTA } from "@/components/home/ContactCTA";
-import { getContentMap, listSections } from "@/lib/queries";
+import { getContentMap, listSections, listClientLogos } from "@/lib/queries";
 import { getSettings } from "@/lib/settings";
 
 export default async function Home() {
   const content = await getContentMap("home");
   const sections = await listSections("home");
   const settings = await getSettings();
+  const clientLogos = await listClientLogos();
 
   const isVisible = (key: string) => sections.find((s) => s.key === key)?.visible !== false;
 
@@ -36,7 +37,7 @@ export default async function Home() {
       )}
       {isVisible("normativa") && <NormativaSection compact content={content.normativa ?? {}} />}
       {isVisible("about") && <AboutSection compact content={content.about ?? {}} />}
-      {isVisible("clients") && <ClientsSection content={content.clients ?? {}} />}
+      {isVisible("clients") && <ClientsSection content={content.clients ?? {}} logos={clientLogos} />}
       {isVisible("faq_teaser") && <FAQSection compact content={content.faq_teaser ?? {}} />}
       {isVisible("contact_cta") && <ContactCTA />}
     </>

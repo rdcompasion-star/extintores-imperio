@@ -186,6 +186,13 @@ const schemaStatements = [
     visible INTEGER NOT NULL DEFAULT 1,
     order_index INTEGER NOT NULL DEFAULT 0
   )`,
+  `CREATE TABLE IF NOT EXISTS client_logos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    media_id INTEGER NOT NULL REFERENCES media(id),
+    name TEXT NOT NULL DEFAULT '',
+    order_index INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL DEFAULT (datetime('now','localtime'))
+  )`,
   `CREATE TABLE IF NOT EXISTS history (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     created_at TEXT NOT NULL DEFAULT (datetime('now','localtime')),

@@ -11,6 +11,7 @@ export const adminNavItems: AdminNavItem[] = [
   { href: "/admin/productos", label: "Productos", emoji: "🛒" },
   { href: "/admin/servicios", label: "Servicios", emoji: "🧰" },
   { href: "/admin/cotizaciones", label: "Cotizaciones", emoji: "🧾" },
+  { href: "/admin/clientes", label: "Logos Clientes", emoji: "🤝" },
   { href: "/admin/faq", label: "Preguntas", emoji: "❓" },
   { href: "/admin/menu", label: "Menú", emoji: "📱" },
   { href: "/admin/vista-previa", label: "Vista previa", emoji: "👀" },
