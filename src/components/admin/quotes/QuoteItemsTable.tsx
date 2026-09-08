@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatCLP } from "@/lib/format";
 import { calculateLineTotal } from "@/lib/quote-calculations";
 import { ConfirmButton } from "@/components/admin/ConfirmButton";
@@ -59,6 +59,14 @@ function ItemRow({
 }) {
   const [qtyText, setQtyText] = useState(String(item.quantity));
   const [priceText, setPriceText] = useState(item.unitPrice > 0 ? String(item.unitPrice) : "");
+
+  // El estado local de los inputs no se resincroniza solo cuando la cantidad
+  // o el precio cambian desde afuera (ej. el recuadro de "cantidad de
+  // personas" al elegir Capacitación) — sin esto el input se queda mostrando
+  // el valor viejo aunque el dato real ya se actualizó.
+  useEffect(() => setQtyText(String(item.quantity)), [item.quantity]);
+  useEffect(() => setPriceText(item.unitPrice > 0 ? String(item.unitPrice) : ""), [item.unitPrice]);
+
   const lineTotal = calculateLineTotal({
     quantity: item.quantity,
     unitPrice: item.unitPrice,

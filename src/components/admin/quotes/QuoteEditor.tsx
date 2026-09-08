@@ -79,6 +79,8 @@ function TextArea({
 
 const steps = ["Cotización", "Cliente", "Ítems", "Descuento", "Condiciones", "Vista previa"];
 const sellerOptions = ["Pamela Díaz", "Luis Medina Rojas"];
+// Al elegir este ítem, se pide de inmediato la cantidad de personas a capacitar.
+const HEADCOUNT_PROMPT_CODE = "CAPACITACION-USO-MANEJO";
 
 let localIdSeq = 0;
 function nextLocalId() {
@@ -144,6 +146,8 @@ export function QuoteEditor({
   );
 
   const [catalogMode, setCatalogMode] = useState<CatalogGroup>("general");
+  const [headcountPromptLocalId, setHeadcountPromptLocalId] = useState<string | null>(null);
+  const [headcountText, setHeadcountText] = useState("");
   const pickerItems = useMemo(
     () => catalogItems.filter((i) => i.catalogGroup === (catalogMode === "caf" ? "caf" : "general")),
     [catalogItems, catalogMode]
@@ -191,6 +195,7 @@ export function QuoteEditor({
   );
 
   function addCatalogItem(catalogItem: QuoteCatalogItem) {
+    const newLocalId = nextLocalId();
     setItems((prev) => {
       const existing = prev.find((i) => i.catalogItemId === catalogItem.id && i.discountType === "none");
       if (existing) {
@@ -199,7 +204,7 @@ export function QuoteEditor({
       return [
         ...prev,
         {
-          localId: nextLocalId(),
+          localId: newLocalId,
           catalogItemId: catalogItem.id,
           kind: catalogItem.kind,
           code: catalogItem.code,
@@ -214,6 +219,18 @@ export function QuoteEditor({
         },
       ];
     });
+    if (catalogItem.code === HEADCOUNT_PROMPT_CODE) {
+      setHeadcountText("");
+      setHeadcountPromptLocalId(newLocalId);
+    }
+  }
+
+  function confirmHeadcount() {
+    const n = Math.floor(Number(headcountText));
+    if (headcountPromptLocalId && Number.isFinite(n) && n >= 1) {
+      updateItem(headcountPromptLocalId, { quantity: n });
+    }
+    setHeadcountPromptLocalId(null);
   }
 
   function updateItem(localId: string, patch: Partial<LocalQuoteItem>) {
@@ -287,6 +304,7 @@ export function QuoteEditor({
   }
 
   return (
+    <>
     <div className="px-5 py-6 sm:px-8">
       {/* Indicador de pasos */}
       <div className="mb-6 flex gap-1.5 overflow-x-auto pb-1">
@@ -572,5 +590,31 @@ export function QuoteEditor({
         </aside>
       </div>
     </div>
+
+    {headcountPromptLocalId && (
+      <div className="fixed inset-0 z-(--z-modal) flex items-center justify-center bg-ink-950/60 p-4">
+        <div className="w-full max-w-xs rounded-xl border border-border bg-bg p-5">
+          <p className="mb-1 text-sm font-semibold text-ink-900">Cantidad de personas</p>
+          <p className="mb-4 text-xs text-ink-500">¿A cuántas personas se va a capacitar?</p>
+          <input
+            autoFocus
+            inputMode="numeric"
+            value={headcountText}
+            onChange={(e) => setHeadcountText(e.target.value.replace(/[^0-9]/g, ""))}
+            onKeyDown={(e) => e.key === "Enter" && confirmHeadcount()}
+            placeholder="Ej: 12"
+            className="mb-4 w-full rounded-md border border-border-strong bg-surface p-3 text-center text-lg text-ink-900"
+          />
+          <button
+            type="button"
+            onClick={confirmHeadcount}
+            className="w-full rounded-md bg-red-700 py-2.5 text-sm font-semibold text-white hover:bg-red-800"
+          >
+            Confirmar
+          </button>
+        </div>
+      </div>
+    )}
+    </>
   );
 }

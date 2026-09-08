@@ -136,6 +136,9 @@ export const quoteCatalogSeed: QuoteCatalogSeedItem[] = [
   // Sin precio de lista confirmado por la empresa: netPrice queda en 0 a
   // propósito (no se inventa un valor) y se cotiza cada vez con "En blanco".
   { code: "INST-CARRETE-RH", kind: "servicio", category: "red-humeda", name: "Instalación Carrete Red Húmeda", unit: "servicio", sizeLabel: "30 y 25 mts", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco." },
+  { code: "SEN-EXT-AUTOADH", kind: "producto", category: "general", name: "Señalética Extintor Autoadhesiva", unit: "unidad", sizeLabel: "", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco." },
+  { code: "CAR-AP-10L-CAPAC", kind: "servicio", category: "agua-a", name: "Carga Extintor AP 10 Lts para Capacitación", unit: "servicio", sizeLabel: "10 Lts", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco." },
+  { code: "CAPACITACION-USO-MANEJO", kind: "servicio", category: "general", name: "Capacitación de Uso y Manejo de Extintores", unit: "persona", sizeLabel: "", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco. La cantidad representa el número de personas." },
 
   // ---------- CATÁLOGO CAF (precios específicos cliente CAF) ----------
   { code: "CAF-NEW-PQS75-01KG", kind: "producto", category: "pqs-abc", name: "Extintor Nuevo Certificado PQS 75% ABC Multipropósito", unit: "unidad", sizeLabel: "1 Kilo", netPrice: 10924, catalogGroup: "caf" },
