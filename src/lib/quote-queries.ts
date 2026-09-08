@@ -1,6 +1,6 @@
 import { db, dbGet, dbAll, dbRun, logHistory, nowIso } from "@/lib/db";
 import { getSettings } from "@/lib/settings";
-import { calculateQuote, type CalcLineInput } from "@/lib/quote-calculations";
+import { calculateQuote, calculateLineTotal, type CalcLineInput } from "@/lib/quote-calculations";
 import type { DiscountType, QuoteItemKind, QuoteStatus } from "@/lib/quote-constants";
 
 // ---------- Catálogo ----------
@@ -279,16 +279,8 @@ function itemsToCalcLines(items: QuoteLineInput[]): CalcLineInput[] {
     unitPrice: item.unitPrice,
     discountType: item.discountType,
     discountValue: item.discountValue,
+    code: item.code,
   }));
-}
-
-function computeLineTotal(item: QuoteLineInput): number {
-  const lineSubtotal = item.quantity * item.unitPrice;
-  return item.discountType === "percent"
-    ? Math.round(lineSubtotal - (lineSubtotal * Math.min(Math.max(item.discountValue, 0), 100)) / 100)
-    : item.discountType === "amount"
-      ? lineSubtotal - Math.min(Math.max(item.discountValue, 0), lineSubtotal)
-      : lineSubtotal;
 }
 
 export async function createQuote(input: QuoteInput): Promise<number> {
@@ -366,7 +358,7 @@ export async function createQuote(input: QuoteInput): Promise<number> {
           item.unitPrice,
           item.discountType,
           item.discountValue,
-          computeLineTotal(item),
+          calculateLineTotal(item),
           i,
         ],
       });
@@ -457,7 +449,7 @@ export async function updateQuote(id: number, input: QuoteInput) {
           item.unitPrice,
           item.discountType,
           item.discountValue,
-          computeLineTotal(item),
+          calculateLineTotal(item),
           i,
         ],
       });

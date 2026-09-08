@@ -33,3 +33,12 @@ export const catalogKindLabels: Record<QuoteItemKind, string> = {
   producto: "Producto",
   servicio: "Servicio",
 };
+
+// Ítems cuyo precio NO se multiplica por la cantidad: la cantidad solo se
+// muestra como dato (ej. número de personas), pero el valor cotizado es fijo
+// sin importar cuántas haya. Hoy solo aplica a la Capacitación.
+export const FIXED_PRICE_CATALOG_CODES: string[] = ["CAPACITACION-USO-MANEJO"];
+
+export function isFixedPriceCode(code: string): boolean {
+  return FIXED_PRICE_CATALOG_CODES.includes(code);
+}

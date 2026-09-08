@@ -46,6 +46,7 @@ export function QuotePreview({ data }: { data: QuotePreviewData }) {
       unitPrice: i.unitPrice,
       discountType: i.discountType,
       discountValue: i.discountValue,
+      code: i.code,
     })),
     globalDiscountType: data.discountType,
     globalDiscountValue: data.discountValue,
@@ -122,6 +123,7 @@ export function QuotePreview({ data }: { data: QuotePreviewData }) {
                       unitPrice: item.unitPrice,
                       discountType: item.discountType,
                       discountValue: item.discountValue,
+                      code: item.code,
                     })
                   )}
                 </td>

@@ -173,6 +173,7 @@ export function QuoteEditor({
           unitPrice: i.unitPrice,
           discountType: i.discountType,
           discountValue: i.discountValue,
+          code: i.code,
         })),
         globalDiscountType: discountType,
         globalDiscountValue: discountValue,

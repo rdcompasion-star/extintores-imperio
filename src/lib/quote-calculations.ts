@@ -3,13 +3,18 @@
 // para evitar errores de precisión de punto flotante. No duplicar estas
 // fórmulas en componentes: todo cálculo de cotización pasa por aquí.
 
-import type { DiscountType } from "@/lib/quote-constants";
+import { isFixedPriceCode, type DiscountType } from "@/lib/quote-constants";
 
 export interface CalcLineInput {
   quantity: number;
   unitPrice: number;
   discountType: DiscountType;
   discountValue: number;
+  /** Código del catálogo. Si es un ítem de precio fijo (ver isFixedPriceCode),
+   * el subtotal de la línea es el precio unitario tal cual, sin multiplicar
+   * por la cantidad (ej. Capacitación: la cantidad es el número de
+   * personas, solo informativa). */
+  code?: string;
 }
 
 /** Redondea al entero más cercano. Todo monto CLP es entero. */
@@ -17,7 +22,8 @@ function round(value: number): number {
   return Math.round(value);
 }
 
-export function calculateLineSubtotal(quantity: number, unitPrice: number): number {
+export function calculateLineSubtotal(quantity: number, unitPrice: number, code?: string): number {
+  if (code && isFixedPriceCode(code)) return round(unitPrice);
   return round(quantity * unitPrice);
 }
 
@@ -37,7 +43,7 @@ export function calculateLineDiscountAmount(
 }
 
 export function calculateLineTotal(input: CalcLineInput): number {
-  const subtotal = calculateLineSubtotal(input.quantity, input.unitPrice);
+  const subtotal = calculateLineSubtotal(input.quantity, input.unitPrice, input.code);
   const discount = calculateLineDiscountAmount(subtotal, input.discountType, input.discountValue);
   return subtotal - discount;
 }

@@ -72,6 +72,7 @@ function ItemRow({
     unitPrice: item.unitPrice,
     discountType: item.discountType,
     discountValue: item.discountValue,
+    code: item.code,
   });
 
   function commitQuantity(raw: string) {

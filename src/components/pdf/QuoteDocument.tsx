@@ -86,6 +86,7 @@ export function QuoteDocument({
       unitPrice: i.unitPrice,
       discountType: i.discountType,
       discountValue: i.discountValue,
+      code: i.code,
     })),
     globalDiscountType: quote.discountType,
     globalDiscountValue: quote.discountValue,
