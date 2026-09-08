@@ -1,5 +1,5 @@
 import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
-import { formatCLP, formatDate } from "@/lib/format";
+import { formatCLP, formatDate, pluralizeUnit } from "@/lib/format";
 import { calculateQuote, calculateLineTotal } from "@/lib/quote-calculations";
 import type { Quote } from "@/lib/quote-queries";
 import type { Settings } from "@/lib/settings";
@@ -164,7 +164,7 @@ export function QuoteDocument({
                 {item.sizeLabel ? <Text style={styles.tdSize}>{item.sizeLabel}</Text> : null}
               </View>
               <Text style={styles.tdQty}>
-                {item.quantity} {item.unit}
+                {item.quantity} {pluralizeUnit(item.quantity, item.unit)}
               </Text>
               <Text style={styles.tdPrice}>{formatCLP(item.unitPrice)}</Text>
               <Text style={styles.tdDiscount}>{discountLabel(item.discountType, item.discountValue)}</Text>
