@@ -142,6 +142,7 @@ export const quoteCatalogSeed: QuoteCatalogSeedItem[] = [
   { code: "MTN-CARRO-ESPUMA-AB-25L", kind: "servicio", category: "general", name: "Mantención Carro Extintor Espuma Mecánica Clase AB", unit: "servicio", sizeLabel: "25 Lts", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco." },
   { code: "MTN-CARRO-ESPUMA-AB-50L", kind: "servicio", category: "general", name: "Mantención Carro Extintor Espuma Mecánica Clase AB", unit: "servicio", sizeLabel: "50 Lts", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco." },
   { code: "MTN-CARRO-ESPUMA-AB-100L", kind: "servicio", category: "general", name: "Mantención Carro Extintor Espuma Mecánica Clase AB", unit: "servicio", sizeLabel: "100 Lts", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco." },
+  { code: "MTN-CARRO-PQS-100KG", kind: "servicio", category: "pqs-abc", name: "Mantención Carro Extintor Polvo ABC Multipropósito", unit: "servicio", sizeLabel: "100 KG", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco." },
 
   // ---------- CATÁLOGO CAF (precios específicos cliente CAF) ----------
   { code: "CAF-NEW-PQS75-01KG", kind: "producto", category: "pqs-abc", name: "Extintor Nuevo Certificado PQS 75% ABC Multipropósito", unit: "unidad", sizeLabel: "1 Kilo", netPrice: 10924, catalogGroup: "caf" },
