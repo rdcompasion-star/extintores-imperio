@@ -1,6 +1,6 @@
 import { db, dbGet, dbRun, logHistory } from "@/lib/db";
 import { contentRegistry } from "@/lib/content-registry";
-import { quoteCatalogSeed } from "@/lib/quote-catalog-seed";
+import { quoteCatalogSeed, quoteCatalogRemovedCodes } from "@/lib/quote-catalog-seed";
 
 // Semilla idempotente: carga los datos reales publicados por Extintores Imperio
 // (los mismos que ya existían hardcodeados en el sitio) la primera vez que se
@@ -615,6 +615,15 @@ export async function ensureSeeded() {
     })),
       "write"
     );
+    if (quoteCatalogRemovedCodes.length > 0) {
+      await db.batch(
+        quoteCatalogRemovedCodes.map((code) => ({
+          sql: `DELETE FROM quote_catalog_items WHERE code = ?`,
+          args: [code],
+        })),
+        "write"
+      );
+    }
     if (!quoteCatalogCountBefore || quoteCatalogCountBefore.c === 0) {
       await logHistory("quote_catalog", null, `Catálogo del cotizador cargado: ${quoteCatalogSeed.length} ítems.`);
     }

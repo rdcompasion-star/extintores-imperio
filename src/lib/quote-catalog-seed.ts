@@ -139,7 +139,9 @@ export const quoteCatalogSeed: QuoteCatalogSeedItem[] = [
   { code: "SEN-EXT-AUTOADH", kind: "producto", category: "general", name: "Señalética Extintor Autoadhesiva", unit: "unidad", sizeLabel: "", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco." },
   { code: "CAR-AP-10L-CAPAC", kind: "servicio", category: "agua-a", name: "Carga Extintor AP 10 Lts para Capacitación", unit: "servicio", sizeLabel: "10 Lts", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco." },
   { code: "CAPACITACION-USO-MANEJO", kind: "servicio", category: "general", name: "Capacitación de Uso y Manejo de Extintores", unit: "persona", sizeLabel: "", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco. La cantidad representa el número de personas." },
-  { code: "MTN-CARRO-ESPUMA-25L", kind: "servicio", category: "general", name: "Mantención Carro Espuma Mecánica", unit: "servicio", sizeLabel: "25 Lts", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco." },
+  { code: "MTN-CARRO-ESPUMA-AB-25L", kind: "servicio", category: "general", name: "Mantención Carro Extintor Espuma Mecánica Clase AB", unit: "servicio", sizeLabel: "25 Lts", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco." },
+  { code: "MTN-CARRO-ESPUMA-AB-50L", kind: "servicio", category: "general", name: "Mantención Carro Extintor Espuma Mecánica Clase AB", unit: "servicio", sizeLabel: "50 Lts", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco." },
+  { code: "MTN-CARRO-ESPUMA-AB-100L", kind: "servicio", category: "general", name: "Mantención Carro Extintor Espuma Mecánica Clase AB", unit: "servicio", sizeLabel: "100 Lts", netPrice: 0, notes: "Sin precio fijo — cotizar con Cotizador en blanco." },
 
   // ---------- CATÁLOGO CAF (precios específicos cliente CAF) ----------
   { code: "CAF-NEW-PQS75-01KG", kind: "producto", category: "pqs-abc", name: "Extintor Nuevo Certificado PQS 75% ABC Multipropósito", unit: "unidad", sizeLabel: "1 Kilo", netPrice: 10924, catalogGroup: "caf" },
@@ -166,3 +168,9 @@ export const quoteCatalogSeed: QuoteCatalogSeedItem[] = [
   { code: "CAF-DIF-CO2-02KG", kind: "producto", category: "co2", name: "Difusor Extintor CO₂", unit: "unidad", sizeLabel: "2 Kilos", netPrice: 9980, catalogGroup: "caf" },
   { code: "CAF-GAB-MET", kind: "producto", category: "general", name: "Gabinete Metálico Puerta Vidriada o Puerta Malla Metálica", unit: "unidad", sizeLabel: "aplica a 2, 4, 6 y 10", netPrice: 42500, catalogGroup: "caf" },
 ];
+
+// Códigos retirados del catálogo: el upsert del arranque solo inserta/actualiza,
+// nunca borra, así que quitar un ítem de la lista de arriba no basta. Estos se
+// eliminan de la base al arrancar (las cotizaciones ya hechas conservan su
+// copia del ítem, no dependen de esta fila).
+export const quoteCatalogRemovedCodes: string[] = ["MTN-CARRO-ESPUMA-25L"];
